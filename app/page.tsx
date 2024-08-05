@@ -7,6 +7,8 @@ import "./../app/app.css";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
+import { Authenticator } from "@aws-amplify/ui-react";
+import { signOut } from "aws-amplify/auth";
 
 Amplify.configure(outputs);
 
@@ -36,6 +38,8 @@ export default function App() {
   }
 
   return (
+  <Authenticator>
+    {({ signOut, user }) => (
     <main>
       <h1>My todos</h1>
       <button onClick={createTodo}>+ new</button>
@@ -49,6 +53,7 @@ export default function App() {
           </li>
         ))}
       </ul>
+      <button onClick={signOut}>SignOut</button>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
         <br />
@@ -57,5 +62,7 @@ export default function App() {
         </a>
       </div>
     </main>
+    )}
+  </Authenticator>
   );
 }
